@@ -1,0 +1,33 @@
+.ControlPanel {
+    margin: 0 auto;
+    font-family: "Roboto", sans-serif;
+  }
+
+  .ControlPanel-header {
+    font-size: 1.2em;
+    margin-top: 40px;
+  }
+  
+  .ControlPanel-time {
+    font-size: 1.5em;
+    margin: 0 15px;
+  }
+
+  .Button {
+    background-color: #000000;
+    border-radius: 10%;
+    border-style: none;
+    color: #ffffff;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 1.5em;
+    height: 40px;
+    padding-top: 4px;
+    width: 40px;
+    margin: 10px;
+  }
+  
+  .Button:hover {
+    background-color: #dd6262;
+  }
+  
