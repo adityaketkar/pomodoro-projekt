@@ -1,5 +1,14 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Running the project first time
+Clone the Repo
+Make sure npm is installed
+Run the following commands(in the pomodoro-frontend directory)
+npm cache verify
+sudo npm install -g create-react-app
+sudo npm install
+
+
 ## Available Scripts
 
 In the project directory, you can run:

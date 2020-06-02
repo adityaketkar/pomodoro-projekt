@@ -10,14 +10,19 @@ class Pomodoro extends Component {
     super(props);
     this.state = {
       interval: false,
-      time: 1500,
-      setTime: 1500,
+      time: 8,
+      setTime: 8,
+      shortBreakTime: 5,
+      longBreakTime: 10,
+      longBreakInterval: 4,
       running: false,
       taskStatus:
         JSON.parse(window.localStorage.getItem('pomodoro-react-taskStatus')) ||
         null
       ,
-      completedSession : 0
+      activity: 'F',     //One of Focus F , Short Break S  or Long Break L
+      completedSession : 0,
+      intervalToLongBreak: 4
     };
   }
 
@@ -57,19 +62,43 @@ class Pomodoro extends Component {
   }
 
   tick = () => {
+    const activity = this.state.activity;
+    let intervalToLongBreakToSet = this.state.intervalToLongBreak;
+    let timeToSet = this.state.setTime;
+    let activityToSet = this.state.activity;
+    let newCompletedSession = this.state.completedSession;
     if (this.state.time <= 1) {
       this.stopInterval();
+      if(activity=='F'){
+        newCompletedSession = this.state.completedSession +1;
+        intervalToLongBreakToSet = intervalToLongBreakToSet - 1;
+        if(intervalToLongBreakToSet==0){
+          timeToSet = this.state.longBreakTime;
+          activityToSet = 'L';
+          intervalToLongBreakToSet = this.state.longBreakInterval;
+        }
+        else{
+          timeToSet = this.state.shortBreakTime;
+          activityToSet = 'S';
+        }
+      }
+      else if(activity=='S'){
+        timeToSet = this.state.setTime;
+        activityToSet = 'F';
+      } 
+      else{
+        timeToSet = this.state.setTime;
+        activityToSet = 'F';
+      }
       this.setState({ running: false });
-      this.setState(state => ({ time: state.setTime }));
+      this.setState(state => ({ time: timeToSet, activity: activityToSet, intervalToLongBreak: intervalToLongBreakToSet, completedSession: newCompletedSession }));
       return;
     }
-    this.setState(state => ({ time: state.time - 1 }));
+    this.setState(state => ({ time: this.state.time - 1 }));
   };
 
   stopInterval = () => {
     clearInterval(this.state.interval);
-    const newCompletedSession = this.state.completedSession +1;
-    this.setState({ interval: null, completedSession: newCompletedSession });
     this.updateDatabase();
   };
 
@@ -107,6 +136,7 @@ class Pomodoro extends Component {
               time={this.state.time}
               status={this.getStatus()}
               progress={this.getProgress()}
+              activity={this.state.activity}
             />
           <ControlPanel setTime={this.state.setTime} onClickDecrease={this.onClickDecrease} onClickIncrease={this.onClickIncrease}/>
           <SessionCounter sessions={this.state.completedSession}/>

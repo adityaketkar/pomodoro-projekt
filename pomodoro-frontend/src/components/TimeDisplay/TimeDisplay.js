@@ -12,12 +12,17 @@ function formatTime(time) {
   return `${minutes}:${seconds}`;
 }
 
+function formatActivity(activity) {
+  return `${activity} Time!`;
+}
+
 const TimeDisplay = (props) => {
-  document.title = `(${props.progress}%  ${formatTime(props.time)}) Pomodoro`;
+  document.title = `(${props.progress}%  ${formatTime(props.time)}) Pomodoro Timer`;
 
   return (
     <div className="TimeDisplay" >
       <div>
+        <p>{formatActivity(props.activity)}</p>
         <button onClick={props.clicked}><h1>{formatTime(props.time)}</h1></button>
         <p>{props.status}</p>
       </div>
