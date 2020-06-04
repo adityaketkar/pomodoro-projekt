@@ -13,6 +13,13 @@ function Button(props) {
 }
 
 function Time(props) {
+    if(props.view=='false'){
+      return (
+        <span >
+          {props.time}
+        </span>
+      );
+    }
     const minutes = Math.floor(props.time / 60);
     const seconds = leftPad(props.time % 60);
   
@@ -35,14 +42,14 @@ class ControlPanel extends PureComponent {
         return (
             <div >
             <h4>
-              Timer Controls
+              {this.props.displayMessage}
             </h4>
             <Button
               label="-"
               onClick={this.props.onClickDecrease}
             />
             <span>
-              <Time time={this.props.setTime} />
+              <Time view={this.props.timeView} time={this.props.setTime} />
             </span>
             <Button
               label="+"

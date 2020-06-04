@@ -13,7 +13,15 @@ function formatTime(time) {
 }
 
 function formatActivity(activity) {
-  return `${activity} Time!`;
+  if (activity=='F'){
+    return 'Focus Time!';
+  }
+  else if(activity=='S'){
+    return 'Short Break Time!';
+  }
+  else{
+    return 'Long Break Time!';
+  }
 }
 
 const TimeDisplay = (props) => {
